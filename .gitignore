@@ -12,7 +12,6 @@ data/
 *.gpkg
 *.jpg
 *.jpeg
-*.png
 *.html
 *.csv
 
