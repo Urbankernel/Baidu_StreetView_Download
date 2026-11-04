@@ -1,0 +1,22 @@
+# 核心依赖（安装示例见 README，建议清华镜像）
+geopandas>=1.0
+shapely>=2.0
+pandas>=2.0
+numpy>=1.24
+requests>=2.31
+Pillow>=9.0
+
+# 可选：读取 .env 配置
+python-dotenv>=1.0
+
+# 配置文件驱动（run -c configs/example.yaml 时用）
+PyYAML>=6.0
+
+# 互动地图（map 命令生成网页地图用）
+folium>=0.15
+
+# ---- 以下为可选依赖，按需安装 ----
+# 离线 .osm.pbf 路网（sample --pbf 时用）
+# pyrosm>=0.6
+# Overpass 在线路网（sample 不传 --roads/--pbf 时用）
+# osmnx>=1.6

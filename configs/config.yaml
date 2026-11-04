@@ -1,0 +1,59 @@
+# ────────────────────────────────────────────────────────────────
+# baidu-pano 配置文件（默认读取：直接 baidu-pano run 即可，无需 -c）
+#   一步跑完全流程:
+#     baidu-pano run
+#   分步运行也可读本配置（命令行参数覆盖同名项）:
+#     baidu-pano download -c configs/config.yaml
+# ────────────────────────────────────────────────────────────────
+
+# 数据根目录（所有产出都落在它下面）
+base_dir: ./data
+
+# 密钥文件：每行「字段=值」，# 开头为注释（模板见 configs/keys.txt.example）
+# 也可用 keys: 字段直接在下面写（优先级高于 key_file），建议走 key_file 不提交真实密钥
+key_file: configs/keys.txt
+# keys:
+#   baidu_ak: "你的百度AK（仅官方 API 备选）"
+#   tianditu_tk: "你的天地图浏览器端密钥（可选）"
+
+# ────────────────────────────────────────────────────────────────
+# 第一步：采样（download.points 指定采样点 CSV 时，本步自动跳过）
+# 路网来源三选一：roads（本地矢量，推荐）/ pbf（离线）/ overpass（在线，默认）
+# ────────────────────────────────────────────────────────────────
+sample:
+  roads: data/roads.gpkg        # 本地路网矢量文件
+  # pbf: data/planet.osm.pbf   # 离线 .osm.pbf（BBBike 下载，离线可用；与 roads 二选一）
+  area: data/study_area.gpkg   # 研究范围（可选；roads 源可省略，pbf/overpass 源必需）
+  spacing: 100                    # 采样间距（米）
+  offset: 15                     # 端点偏移（米）
+  highway: []                    # 道路类型过滤，留空保留全部。使用 pbf 源（BBBike 的 OSM 数据）才需设置
+
+# ────────────────────────────────────────────────────────────────
+# 第二步：下载（核心步骤，不可跳）
+# ────────────────────────────────────────────────────────────────
+download:
+  source: reverse                # reverse=逆向接口（无需AK，默认）/ api=官方静态图API
+  mode:  4_views                  # 4_views / left_right / front_back / panorama
+  pano_level: 3                  # reverse 清晰度 1~4（3=4096×2048）
+  interval: 0.3                  # 请求间隔秒
+  crop_bottom: 0.4               # 裁掉全景底部比例（去掉采集车顶）
+  crop_top: 0.0                  # 裁掉全景顶部比例
+  search_radius: 5.0             # 就近搜索半径（米），设 0 关闭
+  # points: data/samples.csv          # 可选：跳过 sample，直接用采样点 CSV
+  # points_crs: bd09                # 采样点 CSV 坐标系：wgs84 / gcj02 / bd09（仅 CSV 输入生效）
+  # 以下仅 api 源生效：
+  # pitch: -20
+  # fov: 90
+  # width: 640
+  # height: 640
+
+# ────────────────────────────────────────────────────────────────
+# 第三步：地图（设为 false 可跳过）
+# ────────────────────────────────────────────────────────────────
+map:
+  out: streetview_map.html       # 输出 HTML（落在数据目录下）
+  imagery: true                 # true=天地图影像底图，false=矢量底图
+  # points: data/samples.csv     # 可选：指定采样点 CSV（name,lng,lat；不传则读 sample 生成的 gpkg）
+  # points_crs: bd09             # 采样点 CSV 坐标系：wgs84 / gcj02 / bd09（仅当 points 指定 CSV 时生效）
+  # roads: data/roads.gpkg       # 默认自动发现，也可显式指定
+  # area: data/study_area.gpkg

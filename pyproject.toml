@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "baidu-streetview-downloader"
+version = "0.1.0"
+description = "按采样点批量下载百度地图街景图片（逆向接口为主，官方全景静态图 API 备选）"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+# 依赖走 requirements.txt 单独安装，此处留空，
+# 避免 pip install -e . 时重复解析 geopandas 等重型依赖。
+dependencies = []
+
+[project.scripts]
+baidu-pano = "baidu_pano.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["baidu_pano*"]

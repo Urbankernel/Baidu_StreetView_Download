@@ -1,0 +1,15 @@
+# baidu-pano 密钥文件模板
+# 使用方法：复制本文件为 configs/keys.txt，再填写真实值。
+#   Windows: copy configs\keys.txt.example configs\keys.txt
+# 每行「字段=值」；# 开头为注释。keys.txt 已在 .gitignore 中排除，请勿提交真实密钥。
+
+# 百度地图开放平台 AK（仅官方全景静态图 API，--source api 备选路线用；逆向接口无需）
+# 申请：https://lbsyun.baidu.com/ （建议企业认证提配额）
+baidu_ak=
+
+# 天地图浏览器端密钥（map 命令生成互动地图底图用；无则退回无瓦片模式，可留空）
+# 申请：https://console.tianditu.gov.cn/ （需申请"浏览器端"密钥并配置域名白名单）
+tianditu_tk=
+
+# Overpass 端点（可选，sample 走 Overpass 在线路网时用，可换国内可达镜像）
+overpass_url=https://overpass-api.de/api/interpreter
